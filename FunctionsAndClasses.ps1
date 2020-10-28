@@ -1,17 +1,21 @@
-﻿#Object to hold Site Collection information
+﻿$tenant = ""
+
+#Object to hold Site Collection information
 class siteCol{
     [String]$name
     [String]$url
     [Hashtable]$lists=@{}
-    [Array]$contentTypes
+    [Hashtable]$contentTypes
+    [String]$template
     [Boolean]$isSubSite
 
 
-    siteCol([string]$name,$url){
+    siteCol([string]$name,[String]$url,[String]$template){
         <#
         -Inputs-
         [String]$name: Name of the Site Collection we are creating an object for
-        [String]$url: URL of the Site Collection we are creating an object for
+        [String]$url: URL suffix of the Site Collection we are creating an object for
+        [String]$template: STS template to use when creating the Site Collection.
         -Outputs-
         Set $name
         Set $url
@@ -31,23 +35,26 @@ class siteCol{
     -Inputs-
     -Outputs-
     #>
-    [void]addSiteContentTypeToList([String]$contentTypeName,$listName){
-        #Check we aren't working without a Document Library name, otherwise assume that we just want to add a Site Content Type
-        If(($listName -ne $null) -and ($listName -ne "")){
-            If(-not $this.lists.ContainsKey($listName)){
-                $tempList = [list]::new("$listName")
-                $this.lists.Add($listName, $tempList)
-            }
-            
+    [void]addSiteContentTypeToList([String]$contentTypeName,$listName) {
+        If($this.lists.ContainsKey($listName)){
             $this.lists.$listName.addContentType($contentTypeName)
         }
-        
         $this.addContentType($contentTypeName)
     }
 
-    [void]addContentType([String]$contentTypeName){
+    [void]addSiteContentTypeToSite([String]$contentTypeName) {
         If(-not $this.contentTypes.Contains($contentTypeName)){
             $this.contentTypes += $contentTypeName
+        }
+    }
+
+    [void]addListToSite([String]$listName, [String]$template) {
+        If(-not $this.lists.ContainsKey($listName)){
+            $tempList = [list]::new("$listName")
+            $this.lists.Add($listName, $tempList)
+        }
+        Else {
+            Write-Host "List '$listName' already recorded for creation."
         }
     }
 }
@@ -55,11 +62,13 @@ class siteCol{
 #Object to hold List Information
 class list{
     [String]$name
+    [String]$template
     [Array]$contentTypes
 
-    list([String]$name){
-        Write-Host "Creating list object with name $name" -ForegroundColor Yellow
+    list([String]$name, [String]$template){
+        Write-Host "Creating list object with name '$name' and template '$template'" -ForegroundColor Yellow
         $this.name = $name
+        $this.template = $template
         $this.contentTypes = @()
     }
 
@@ -76,25 +85,18 @@ function checkIfSubsiteURL([String]$url){
     -Inputs-
     [String]$url: URL to check if it's for a subsite
     -Outputs-
-    $True if 5x '/' and character(s) found beyond it (assumption for subsite)
-    $False if 4x '/' OR 5x '/' and no character(s) found beyond it (assumption for a site collection)
+    $True if Site URL is the same as Web URL
+    $False Site URL is not the same as Web URL
     #>
     
-    $countFwdSlashes = ($url.ToCharArray() | Where-Object {$_ -eq '/'} | Measure-Object).Count
+    $web = Get-PnPWeb
+    $site = Get-PnPSite
 
-    If($countFwdSlashes -gt 4){
-        $indexLastFwdSlash = $url.LastIndexOf('/')
-        $indexLastFwdSlash++
-        #Check the character after the 5th '/', if there's a character we assume this is a subsite URL
-        If($url[$indexLastFwdSlash].Length -eq 1){
-            $true
-        }
-        Else{
-            $false
-        }
+    If($web.Url -eq $site.Url) {
+        Return $True
     }
-    Else{
-        $false
+    Else {
+        Return $False
     }
 }
 
