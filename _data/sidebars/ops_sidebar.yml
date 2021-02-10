@@ -18,16 +18,7 @@ entries:
       url: /tocpage.html
       output: pdf
       type: frontmatter
-      
-  folderitems:
-  
-  - title: Get started
-    url: /index.html
-    output: web
-    type: homepage
-    
-  folders:
-  
+
   - title: SharePoint Online
     output: web
     
@@ -41,7 +32,7 @@ entries:
       output: web
 
   folderitems:
-  
+    
   - title: SharePoint On-Premise
     url: /onprem_enterprise.html
     output: web
