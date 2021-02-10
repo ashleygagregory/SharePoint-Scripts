@@ -18,28 +18,30 @@ entries:
       url: /tocpage.html
       output: pdf
       type: frontmatter
-
-  - title: Overview
-    output: web, pdf
-    folderitems:
-
-    - title: Get started
-      url: /index.html
-      output: web, pdf
-      type: homepage
-
+      
+  folderitems:
+  
+  - title: Get started
+    url: /index.html
+    output: web
+    type: homepage
+    
+  folders:
+  
   - title: SharePoint Online
-    output: web, pdf
+    output: web
+    
     folderitems:
-
     - title: SMB Deployment
       url: /online_smb.html
-      output: web, pdf
+      output: web
 
     - title: Enterprise Deployment
       url: /online_enterprise.html
-      output: web, pdf
+      output: web
 
+  folderitems:
+  
   - title: SharePoint On-Premise
-    url: /onprem_enterprise
-    output: web, pdf
+    url: /onprem_enterprise.html
+    output: web
