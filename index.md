@@ -2,12 +2,6 @@
 
 A script to create the required Lists in a Site Collection for licensing and other uses by the OnePlace Solutions clients.
 
-## Table of Contents
-
-1. [Pre-Requisites](#pre-requisites)
-2. [SharePoint Online](#sharepoint-online)
-
-
 ## Pre-requisites
 
 
@@ -36,7 +30,7 @@ A script to create the required Lists in a Site Collection for licensing and oth
     * This script only utilizes the 'Have full control of all Site Collections' permission pictured above, and this is restricted by the delegated permissions of the user that is authenticating.
 	
 
-## SharePoint Online
+## Setting up the Site - SharePoint Online
 
 *All actions performed with the script will be logged to 'OPSScriptLog.txt' in your Documents folder (or possibly under the Administrator account's Documents if running PowerShell as an Administrator). When requesting assistance with this script please send this log file as an attachment. This directory can be changed in-script.*
 
