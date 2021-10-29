@@ -12,13 +12,6 @@ While ($input -ne 'q'){
     #Pull the List/Library from the URL and create a Script from it
     $SiteScript = Get-PnPSiteScriptFromList -Url $input
 
-    #If you have a Site Script from SharePoint Designer, you can remove both the previous commands and use this instead (remove leading <# and trailing #> to uncomment the line)
-    <#
-    SiteScript =@'
-    <put your script JSON data here>
-    '@ 
-    #>
-
     $SiteScriptName = Read-Host "Enter a name for the Site Script, eg 'addEmailsLibrary'"
 
     #Upload the Site Script to M365, we can't use it yet though because no Site Design calls it
@@ -28,6 +21,13 @@ While ($input -ne 'q'){
     Write-Host "Created Site Script $SiteScriptName and stored with ID $($NewSiteScript.Id)"
     $input = Read-Host "What is the URL of the List/Library you wish to template? (or enter 'q' to finish adding Lists/Libraries)"
 }
+
+#If you have a Site Script from SharePoint Designer, you can remove both the previous commands and use this instead (remove leading <# and trailing #> to uncomment the line)
+<#
+SiteScript =@'
+<put your script JSON data here>
+'@ 
+#>
 
 $SiteDesignName = Read-Host "Enter a name for the Site Design, eg 'Team Site + Emails Library"
 $SiteDesignDesc = Read-Host "Enter a description for this Site Design, eg 'Adds an Emails Library to a Team Site with required columns and views'"
