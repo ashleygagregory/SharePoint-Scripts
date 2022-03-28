@@ -11,7 +11,7 @@ $json = Read-Host "Would you like to enter a JSON SharePoint Designer value for 
 If($json -eq 'n') {
     Write-Host "Skipping JSON option. Script running in script-per-list mode." -ForegroundColor Yellow
     $input = Read-Host "What is the URL of the Site you wish to template?"
-    $lists = Read-Host "What are the lists/Libraries you wish to include? Enter these separated by semicolon's and include 'lists/' before any lists, and no unnecessary spaces, eg 'lists/Central Register;Shared Documents;Emails'`nNote that this will also include the Columns and Views from these locations."
+    $lists = Read-Host "What are the lists/Libraries you wish to include? Enter these as relative URL's separated by semicolon's, include 'lists/' before any lists, and no unnecessary spaces, eg 'lists/Central Register;Shared Documents;Emails'`nNote that this will also include the Columns and Views from these locations."
     [String[]]$listsArray = $lists.Split(";")
 
     #Pull the List/Library from the URL and create a Script from it
