@@ -1,4 +1,4 @@
-﻿$site = 'https://opsdev2.sharepoint.com/sites/obc-cases'
+﻿$site = 'https://contoso.sharepoint.com/sites/cases'
 $list = 'Documents'
 $firstLevelFolder = 'Birdman, Harvey T65432'
 
